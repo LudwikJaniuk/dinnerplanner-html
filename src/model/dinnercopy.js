@@ -25,14 +25,17 @@ class DinnerModel {
   //Returns the dish that is on the menu for selected type 
   getSelectedDish(type) {
     //TODO Lab 0
-      let menu = getFullMenu();
-      for (menuDish in menu) {
-          if (menuDish.type === type) {
-              return dish;
-          } else {
-              return undefined;
+      var menu = getFullMenu();
+      for (var i = 0; i<menu.length; i++) {
+          var obj = menu[i];
+          for (var key in obj) {
+              var attrName = key;
+              var attrVal = obj[key];
+              if (attrName = type) {
+                  return attrVal;
+              }
           }
-      }                
+      }               
           
   }
 
@@ -45,58 +48,29 @@ class DinnerModel {
   //Returns all ingredients for all the dishes on the menu.
   getAllIngredients() {
     //TODO Lab 0
-      let menu = getFullMenu;
-      let ingredients = [];
-      for (menuDish in menu) {
-          ingredients = ingredients.concat(menuDish.ingredients);
-      }
-      return ingredients;
+      var menu = getFullMenu;
+      for (i=0; i<menu.length; i++) {
+          var obj = menu[i];
+          for (var key in obj) {
+              var attrName = key;
+              var attrVal = obj[key];
+              if (attrName = "in
   }
 
   //Returns the total price of the menu (all the ingredients multiplied by number of guests).
   getTotalMenuPrice() {
     //TODO Lab 0
-      let ingredients = getAllIngredients();
-      let numberOfGuests = getNumberOfGuests();
-      let sum = 0;
-      for (ingredient in ingredients) {
-          sum += ingredient.price;
-      }
-      sum *= numberOfGuests;
-      return sum;
   }
 
   //Adds the passed dish to the menu. If the dish of that type already exists on the menu
   //it is removed from the menu and the new one added.
   addDishToMenu(id) {
-    //TODO Lab 0
-    let dish = getDish(id);
-    if (dish === undefined) {
-        break;
-    }
-    let menu = getFullMenu();
-    for (let menuDish in menu) {
-        if (menuDish.type === dish.type) {
-            let menuID = menuDish.id;
-            removeDishFromMenu(menuID);
-            menu.push(dish);
-        } else {
-            menu.push(dish)
-        }  
-    
+    //TODO Lab 0 
   }
 
   //Removes dish from menu
   removeDishFromMenu(id) {
     //TODO Lab 0
-    let menu = getFullMenu();
-    for (i=0; i<menu.length; i++) {
-        let menuDish = menu[i];
-        if (menuDish.id === id) {
-            menu.splice(i, 1);
-        }
-    }
-            
   }
 
 

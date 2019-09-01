@@ -27,10 +27,10 @@ class DinnerModel {
     //TODO Lab 0
       var menu = getFullMenu();
       for (var i = 0; i<menu.length; i++) {
-          var obj = menu[i];
-          for (var key in obj) {
+          var dish = menu[i];
+          for (var key in dish) {
               var attrName = key;
-              var attrVal = obj[key];
+              var attrVal = dish[key];
               if (attrName = type) {
                   return attrVal;
               }

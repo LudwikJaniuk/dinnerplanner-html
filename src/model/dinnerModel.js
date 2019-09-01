@@ -1,61 +1,104 @@
-//DinnerModel class
+//DinnerModel classs
 class DinnerModel {
 
   constructor() {
     this.dishes = dishesConst;
+
+    //TODO Lab 0
+    // implement the data structure that will hold number of guests
+    // and selected dishes for the dinner menu
     this.numberOfGuests = 4;
     this.menu = [];
 
   }
 
   setNumberOfGuests(num) {
+    //TODO Lab 0
       this.numberOfGuests = num;
   }
 
   getNumberOfGuests() {
+    //TODO Lab 0
       return this.numberOfGuests;
   }
 
   //Returns the dish that is on the menu for selected type 
   getSelectedDish(type) {
-      let res = getFullMenu().filter(x => x.type === type).pop();
-      return res;               
+    //TODO Lab 0
+      let menu = getFullMenu();
+      for (menuDish in menu) {
+          if (menuDish.type === type) {
+              return dish;
+          } else {
+              return undefined;
+          }
+      }                
           
   }
 
   //Returns all the dishes on the menu.
   getFullMenu() {
+    //TODO Lab 0
       return this.menu;
   }
 
   //Returns all ingredients for all the dishes on the menu.
   getAllIngredients() {
-      let res = getFullMenu().map(dish => dish.ingredients).flat();
-      return res;
-      
+    //TODO Lab 0
+      let menu = getFullMenu;
+      let ingredients = [];
+      for (menuDish in menu) {
+          ingredients = ingredients.concat(menuDish.ingredients);
+      }
+      return ingredients;
   }
 
   //Returns the total price of the menu (all the ingredients multiplied by number of guests).
   getTotalMenuPrice() {
-      res = getAllIngredients().map(a => a.price).reduce((acc, elem) => acc + elem, 0)*getNumberOfGuests();
-      return res;
+    //TODO Lab 0
+      let ingredients = getAllIngredients();
+      let numberOfGuests = getNumberOfGuests();
+      let sum = 0;
+      for (ingredient in ingredients) {
+          sum += ingredient.price;
+      }
+      sum *= numberOfGuests;
+      return sum;
   }
 
   //Adds the passed dish to the menu. If the dish of that type already exists on the menu
   //it is removed from the menu and the new one added.
   addDishToMenu(id) {
+    //TODO Lab 0
     let dish = getDish(id);
+    if (dish === undefined) {
+        break;
+    }
     let menu = getFullMenu();
-    removeDishFromMenu((menu.filter(elem => elem.type === dish.type).pop().id));
-    this.menu.push(dish);
+    for (let menuDish in menu) {
+        if (menuDish.type === dish.type) {
+            let menuID = menuDish.id;
+            removeDishFromMenu(menuID);
+            menu.push(dish);
+        } else {
+            menu.push(dish)
+        }  
     
   }
 
   //Removes dish from menu
   removeDishFromMenu(id) {
-    this.menu = getFullMenu().filter(dish => dish.id !== id);
+    //TODO Lab 0
+    let menu = getFullMenu();
+    for (i=0; i<menu.length; i++) {
+        let menuDish = menu[i];
+        if (menuDish.id === id) {
+            menu.splice(i, 1);
+        }
+    }
             
   }
+
 
   //Returns all dishes of specific type (i.e. "starter", "main dish" or "dessert").
   //query argument, text, if passed only returns dishes that contain the query in name or one of the ingredients.
@@ -80,11 +123,14 @@ class DinnerModel {
 
   //Returns a dish of specific ID
   getDish(id) {
-      let dish = this.dishes.filter(dish => dish.id === id).pop();
-      return dish;
-      
+    for (let dsh of this.dishes) {
+      if (dsh.id === id) {
+        return dsh;
+      }
+    }
+    return undefined;
   }
-
+}
 
 // the dishes constant contains an array of all the 
 // dishes in the database. Each dish has id, name, type,
@@ -354,4 +400,3 @@ function deepFreeze(o) {
 
 deepFreeze(dishesConst);
 
-// will this fail? array of arrays

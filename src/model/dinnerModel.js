@@ -101,21 +101,25 @@ class DinnerModel {
     //Returns all dishes of specific type (i.e. "starter", "main dish" or "dessert").
     //query argument, text, if passed only returns dishes that contain the query in name or one of the ingredients.
     //if you don't pass any query, all the dishes will be returned
-    getAllDishes(type, query) {
+	getAllDishes(type, query) {
         return this.dishes.filter(function (dish) {
-        let found = true;
-        if (query) {
-            found = false;
-            dish.ingredients.forEach(function (ingredient) {
-            if (ingredient.name.indexOf(query) !== -1) {
-                found = true;
-            }
-            });
-            if (dish.name.indexOf(query) !== -1) {
-            found = true;
-            }
-        }
-        return dish.type === type && found;
+			let found = true;
+			if (query) {
+				found = false;
+				dish.ingredients.forEach(function (ingredient) {
+				if (ingredient.name.indexOf(query) !== -1) {
+					found = true;
+				}
+				});
+				if (dish.name.indexOf(query) !== -1) {
+				found = true;
+				}
+			}
+			if (!type && found) {
+				return dish; 
+			} else {
+				return dish.type === type && found;
+			}
         });
     }
     

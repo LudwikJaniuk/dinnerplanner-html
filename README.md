@@ -1,9 +1,10 @@
-# Interaction Programing - Lab 0
+# Interaction Programing - Lab 1
 =================================================
 
-This project contains the startup code for Lab 0, which focuses on testing and the model. For more details on how to complete the assignment follow the instructions on the [course website](https://www.kth.se/social/course/DH2642).
+This branch contains new tests for lab 1. For more details on how to complete the assignment follow the instructions on the [course website](https://www.kth.se/social/course/DH2642).
 
 You only need to modify dinnerModel.js. If you modify the other files, merging might be a bit more tricky for you when moving to the next lab.
+It might make sense to add new files tho, for example a settings file for the API key.
 
 ## Testing
 

@@ -102,7 +102,7 @@ class DinnerModel {
     //query argument, text, if passed only returns dishes that contain the query in name or one of the ingredients.
     //if you don't pass any query, all the dishes will be returned
 	getAllDishes(type, query) {
-        return this.dishes.filter(function (dish) {
+		return this.dishes.filter(function (dish) {
 			let found = true;
 			if (query) {
 				found = false;

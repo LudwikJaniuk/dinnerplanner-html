@@ -2,7 +2,7 @@
 class DinnerModel {
     
   constructor() {
-      this.dishes = dishesConst;
+      this.dishes = undefined;
       this.numberOfGuests = 0;
       this.menu = [];
   }
@@ -81,28 +81,34 @@ class DinnerModel {
       });
   }
   
-  //Returns a dish of specific ID
+	//Returns a dish of specific ID
+	
   getDish(id) {
-      let dish = this.dishes.filter(dish => dish.id === id).pop();
-      return dish;
-  }
+		let host = "http://sunset.nada.kth.se:8080/iprog/group/11/";
+		let key = "3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767";
+    const authHeader={"X-Mashape-Key": key};
+		const request = "recipes/"+id+"/information/";
+		let dish = fetch(host+request, {
+			method: "GET",
+			headers: authHeader
+		})
+		//.then(handleErrors)
+		.then(response => response.json())
+		.then(data => dish = data)
+		.catch(function(error) {
+			console.log(error);
+		});
+		return dish;
+	}
+		
 }    
-// load your api key here
-const clientKey = getClientKey();
-const authHeader={"X-Mashape-Key":clientKey};
-const URL = "http://sunset.nada.kth.se:8080/iprog/group/11/";
-const request = "recipes/search"
-fetch(URL+request, {
-    method: "GET",
-    headers: authHeader;
-})
-.then(handleHTTPError)
-.then(response => response.json())
-.then(object => fetch("https://api.imgur.com/3/image"+object.data.deleteHash, {
-    method: "POST",
-    body: createFormData({description: "some image description"});
-    headers: authHeader;
-})
-.then(handleHTTPError)
-.then(console.log)
-.catch(console.error)
+
+function handleErrors(response) {
+	if(!response.ok) {
+		if (response.status !== 404) {
+			throw Error(response.statusText);
+		}
+	}
+	return response;
+}
+//debugger;

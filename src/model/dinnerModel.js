@@ -40,14 +40,13 @@ class DinnerModel {
   
   //Adds the passed dish to the menu. If the dish of that type already exists on the menu
   //it is removed from the menu and the new one added.
-  addDishToMenu(id) {
-      let dish = this.getDish(id);
+  addDishToMenu(data) {
       let menu = this.getFullMenu();
-      let otherDish = menu.filter(elem => elem.type === dish.type).pop();
+      let otherDish = menu.filter(elem => data.dishTypes.includes(elem.type)).pop();
       if (otherDish != undefined) {
           this.removeDishFromMenu(otherDish.id);
       }
-      this.menu.push(dish);
+      this.menu.push(data);
   }
   
   //Removes dish from menu
@@ -92,6 +91,13 @@ class DinnerModel {
   
 	//Returns a dish of specific ID
   getDish(id) {
+		/* THIS GOES AGAINST CORS POLICY - DOESNT WORK!
+		let actual_JSON = null;
+		loadJSON(function(response) {
+			actual_JSON = JSON.parse(response);
+			console.log(actual_JSON);
+		});
+		*/
 		let host = "http://sunset.nada.kth.se:8080/iprog/group/11/";
 		let key = "3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767";
     const authHeader={"X-Mashape-Key": key};
@@ -101,7 +107,10 @@ class DinnerModel {
 			headers: authHeader
 		})
 		.then(handleErrors)
-		.then(response => response.json())
+		.then(function(response) {
+			document.getElementById("loader").style.display = "none";
+			return response.json()
+		})
 		.catch(function(error) {
 			console.log(error);
 		});
@@ -117,4 +126,15 @@ function handleErrors(response) {
 	}
 	return response;
 }
-//debugger;
+
+function loadJSON(callback) {
+	let xhr = new XMLHttpRequest();
+	xhr.overrideMimeType("application/json");
+	xhr.open('GET', 'config.json', true);
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status === 200) {
+			callback(xhr.responseText);
+		}
+	};
+	xhr.send(null);
+}

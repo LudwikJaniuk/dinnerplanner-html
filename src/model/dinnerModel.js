@@ -92,7 +92,7 @@ class DinnerModel {
 			method: "GET",
 			headers: authHeader
 		})
-		//.then(handleErrors)
+		.then(handleErrors)
 		.then(response => response.json())
 		.then(data => dish = data)
 		.catch(function(error) {

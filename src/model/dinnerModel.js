@@ -2,7 +2,6 @@
 class DinnerModel {
     
   constructor() {
-      this.dishes = undefined;
       this.numberOfGuests = 0;
       this.menu = [];
   }
@@ -60,29 +59,38 @@ class DinnerModel {
   //query argument, text, if passed only returns dishes that contain the query in name or one of the ingredients.
   //if you don't pass any query, all the dishes will be returned
   getAllDishes(type, query) {
-      return this.dishes.filter(function (dish) {
-    let found = true;
-    if (query) {
-      found = false;
-      dish.ingredients.forEach(function (ingredient) {
-      if (ingredient.name.indexOf(query) !== -1) {
-        found = true;
-      }
-      });
-      if (dish.name.indexOf(query) !== -1) {
-      found = true;
-      }
-    }
-    if (!type && found) {
-      return dish; 
-    } else {
-      return dish.type === type && found;
-    }
-      });
+		let host = "http://sunset.nada.kth.se:8080/iprog/group/11/";
+		let key = "3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767";
+		const authHeader={"X-Mashape-Key": key};
+		let request = "recipes/search";
+		if (type || query) {
+			request += '?';
+			if (type) {
+				request += 'type='+type;
+				if (query) {
+					request += '&';
+				}
+			}
+			if (query) {
+				request += 'query='+query;
+			}
+		}
+		
+		let dishes = fetch(host+request, {
+			method: "GET",
+			headers: authHeader
+		})
+		.then(handleErrors)
+		.then(response => response.json())
+		.then(response => response.results)
+		.catch(function(error) {
+			console.log(error);
+		});
+
+    return dishes;
   }
   
 	//Returns a dish of specific ID
-	
   getDish(id) {
 		let host = "http://sunset.nada.kth.se:8080/iprog/group/11/";
 		let key = "3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767";
@@ -94,7 +102,6 @@ class DinnerModel {
 		})
 		.then(handleErrors)
 		.then(response => response.json())
-		.then(data => dish = data)
 		.catch(function(error) {
 			console.log(error);
 		});
@@ -104,10 +111,9 @@ class DinnerModel {
 }    
 
 function handleErrors(response) {
-	if(!response.ok) {
-		if (response.status !== 404) {
-			throw Error(response.statusText);
-		}
+	if(!response.ok && response.status !== 404) {
+		console.log('error caught in handler');
+		throw Error(response.statusText);
 	}
 	return response;
 }

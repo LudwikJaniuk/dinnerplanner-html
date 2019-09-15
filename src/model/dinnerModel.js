@@ -30,7 +30,7 @@ class DinnerModel {
 
 	// Returns all ingredients for all the dishes on the menu.
 	getAllIngredients() {
-		let res = this.getFullMenu().map(dish => dish.ingredients).flat(); // return ingredients instaed
+		let res = this.getFullMenu().map(dish => dish.ingredients).flat();
 		return res;
 	}
 

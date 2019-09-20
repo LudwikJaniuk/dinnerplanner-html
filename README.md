@@ -20,3 +20,8 @@ Open `index.html` in the browser and tests should run automatically
 * [src/app.js](/src/app.js) - this is the overall code of the application. It is responsible for initial setup of the app (when the page loads for the first time). You will find it more relevant when you start working with views in future labs.
 * [images/](/images) - folder contains some pictures you can use for your dishes.
 
+## Feedback
+
+* Bra att ni inte pushat API-nyckeln, men notera att appen kraschar helt om filen saknas. Hade man kunnat göra det bättre?
+* Separata HTML-filer, bra för navigering i den här labben. Tänker du en HTML per view eller en per screen? Hur ska flera views komponeras?
+* Nästa steg blir ju att lägga in data dynamiskt i HTML-en, tänk på hur det ska göras! Särskilt då man inte vet t.ex. hur många divvar det ska bli!
